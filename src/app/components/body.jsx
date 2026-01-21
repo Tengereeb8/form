@@ -140,7 +140,15 @@ import { FirstStep } from "./Firststep";
 import { SecondStep } from "./secondstep";
 import { Thirdstep } from "./thirdstep";
 
-export const Body = ({ step, formData, updateField }) => {
+export const Body = ({
+  setStep,
+  step,
+  formData,
+  updateField,
+  hadledNextStep,
+  error,
+  handleChangerOfPhoneNumber,
+}) => {
   return (
     <div className="mt-7 flex flex-col gap-3">
       {/* PAGE 1: NAMES */}
@@ -152,6 +160,9 @@ export const Body = ({ step, formData, updateField }) => {
             value={formData.firstName}
             onChange={(val) => updateField("firstName", val)}
             validationType="noNumbers"
+            step={step}
+            hadledNextStep={hadledNextStep}
+            error={error}
           />
           <FirstStep
             text={"Lastname"}
@@ -159,13 +170,18 @@ export const Body = ({ step, formData, updateField }) => {
             value={formData.lastName}
             onChange={(val) => updateField("lastName", val)}
             validationType="noNumbers"
+            step={step}
+            hadledNextStep={hadledNextStep}
+            error={error}
           />
           <FirstStep
             text={"Username"}
             placeholder={"Enter Username"}
             value={formData.userName}
             onChange={(val) => updateField("userName", val)}
-            validationType="noNumbers"
+            step={step}
+            hadledNextStep={hadledNextStep}
+            error={error}
           />
         </>
       )}
@@ -175,28 +191,47 @@ export const Body = ({ step, formData, updateField }) => {
         <>
           <SecondStep
             text={"Email"}
-            placeholder={"example@gmail.com"}
+            placeholder={"Enter Email"}
             value={formData.email}
             onChange={(val) => updateField("email", val)}
-            validationType="gmail"
+            validationType="noNumbers"
+            step={step}
+            handleNextStep={hadledNextStep}
+            setStep={setStep}
+            handleChangerOfPhoneNumber={handleChangerOfPhoneNumber}
           />
           <SecondStep
             text={"Phone Number"}
-            placeholder={"Enter Phone"}
-            value={formData.tel}
-            onChange={(val) => updateField("tel", val)}
+            placeholder={"Enter Phone Number"}
+            value={formData.phoneNumber}
+            onChange={(val) => updateField("phoneNumber", val)}
+            validationType="noNumbers"
+            step={step}
+            handleNextStep={hadledNextStep}
+            setStep={setStep}
+            handleChangerOfPhoneNumber={handleChangerOfPhoneNumber}
           />
           <SecondStep
             text={"Password"}
             placeholder={"Enter Password"}
             value={formData.password}
             onChange={(val) => updateField("password", val)}
+            validationType="noNumbers"
+            step={step}
+            handleNextStep={hadledNextStep}
+            setStep={setStep}
+            handleChangerOfPhoneNumber={handleChangerOfPhoneNumber}
           />
           <SecondStep
             text={"Confirm Password"}
             placeholder={"Confirm Password"}
+            handleChangerOfPhoneNumber={handleChangerOfPhoneNumber}
             value={formData.confirmPassword}
             onChange={(val) => updateField("confirmPassword", val)}
+            validationType="noNumbers"
+            step={step}
+            handleNextStep={hadledNextStep}
+            setStep={setStep}
           />
         </>
       )}

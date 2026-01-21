@@ -40,6 +40,7 @@ import { Body } from "./body";
 import { Navigation } from "./navigation";
 
 export const Valid = () => {
+  const [error, setError] = useState("");
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -53,8 +54,30 @@ export const Valid = () => {
     img: "",
   });
 
+  const handleChangerOfPhoneNumber = (e) => {
+    const inputValue = e.target.value;
+    onChange(inputValue);
+    if (!/\d+/.test(inputValue)) {
+      setError("Only Numbers approved");
+    }
+  };
+
   const updateField = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const hadledNextStep = () => {
+    if (/\d/.test(formData.firstName) || /\d/.test(formData.lastName)) {
+      setError("Numbers are not allowed.");
+    } else if (
+      formData.firstName.trim() === "" ||
+      formData.lastName.trim() === "" ||
+      formData.userName.trim() === ""
+    ) {
+      setError("Field must be filled");
+    } else {
+      setStep((prev) => prev + 1);
+    }
   };
 
   return (
@@ -65,28 +88,17 @@ export const Valid = () => {
         </nav>
         <main>
           {/* Pass data and step to Body */}
-          <Body step={step} formData={formData} updateField={updateField} />
+          <Body
+            step={step}
+            formData={formData}
+            updateField={updateField}
+            hadledNextStep={hadledNextStep}
+            error={error}
+            handleChangerOfPhoneNumber={handleChangerOfPhoneNumber}
+          />
         </main>
 
         {/* Buttons at the bottom */}
-        <div className="absolute bottom-0 mb-8 left-8 right-8 flex gap-2">
-          {step > 1 && (
-            <button
-              onClick={() => setStep(step - 1)}
-              className="flex-1 h-11 border border-gray-300 rounded-md hover:bg-gray-50"
-            >
-              Back
-            </button>
-          )}
-          <div>
-            <button
-              onClick={() => setStep(step + 1)}
-              className="w-104 h-11 flex justify-center items-center text-white bg-[#121316] rounded-md"
-            >
-              Continue
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
