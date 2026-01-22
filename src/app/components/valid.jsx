@@ -54,38 +54,39 @@ export const Valid = () => {
     img: "",
   });
 
-  const handleChangerOfPhoneNumber = (e) => {
-    const inputValue = e.target.value;
-    onChange(inputValue);
-    if (!/\d+/.test(inputValue)) {
-      setError("Only Numbers approved");
-    }
+  const updateField = (name, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
-
-  const updateField = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
   const hadledNextStep = () => {
-    if (/\d/.test(formData.firstName) || /\d/.test(formData.lastName)) {
-      setError("Numbers are not allowed.");
-    } else if (
-      formData.firstName.trim() === "" ||
-      formData.lastName.trim() === "" ||
-      formData.userName.trim() === ""
+    if (
+      !formData.firstName.trim() ||
+      !formData.lastName.trim() ||
+      !formData.userName.trim()
     ) {
-      setError("Field must be filled");
-    } else {
-      setStep((prev) => prev + 1);
+      setError({
+        isValid: false,
+        message: "All fields must be filled",
+      });
+      return;
     }
+
+    if (error && !error.isValid) {
+      return;
+    }
+
+    setError({ isValid: true, message: "" });
+    setStep((prev) => prev + 1);
+  };
+  const handledPrevStep = () => {
+    setStep((prev) => prev - 1);
   };
 
   return (
     <div className="bg-[#f5f5f5] h-screen text-black flex justify-center items-center ">
-      <div className="bg-white w-120 rounded-lg p-8 h-174 relative shadow-lg">
-        <nav>
-          <Navigation currentStep={step} />
-        </nav>
+      <div className="">
         <main>
           {/* Pass data and step to Body */}
           <Body
@@ -94,7 +95,9 @@ export const Valid = () => {
             updateField={updateField}
             hadledNextStep={hadledNextStep}
             error={error}
-            handleChangerOfPhoneNumber={handleChangerOfPhoneNumber}
+            handledPrevStep={handledPrevStep}
+            setStep={setStep}
+            setFormData={setFormData}
           />
         </main>
 

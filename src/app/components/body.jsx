@@ -1,142 +1,7 @@
-// // import { FirstStep } from "./Firststep";
-
-// // export const Body = () => {
-// //   return (
-// //     <div className="mt-7 flex flex-col gap-3">
-// //       <FirstStep text={"Firstname"} placeholder={"Firstname"} />
-// //       <FirstStep text={"Lastname"} placeholder={"Lastname"} />
-// //       <FirstStep text={"Username"} placeholder={"Username"} />
-// //     </div>
-// //   );
-// // };
-// "use client";
-// import { useState } from "react";
-// import { FirstStep } from "./Firststep";
-
-// export const Body = () => {
-//   const [formData, setFormData] = useState({
-//     firstname: "",
-//     lastname: "",
-//     username: "",
-//   });
-
-//   const updateField = (field, value) => {
-//     setFormData((prev) => ({ ...prev, [field]: value }));
-//   };
-
-//   return (
-//     <div className="mt-7 flex flex-col gap-3">
-//       <FirstStep
-//         text={"Firstname"}
-//         placeholder={"Enter Firstname"}
-//         value={formData.firstname}
-//         onChange={(val) => updateField("firstname", val)}
-//       />
-//       <FirstStep
-//         text={"Lastname"}
-//         placeholder={"Enter Lastname"}
-//         value={formData.lastname}
-//         onChange={(val) => updateField("lastname", val)}
-//       />
-//       <FirstStep
-//         text={"Username"}
-//         placeholder={"Enter Username"}
-//         value={formData.username}
-//         onChange={(val) => updateField("username", val)}
-//       />
-//     </div>
-//   );
-// };
-// "use client";
-// import { FirstStep } from "./Firststep";
-
-// export const Body = ({ step, formData, updateField }) => {
-//   return (
-//     <div className="mt-7 flex flex-col gap-3">
-//       {/* PAGE 1: NAMES */}
-//       {step === 1 && (
-//         <>
-//           <FirstStep
-//             text={"Firstname"}
-//             placeholder={"Enter Firstname"}
-//             value={formData.firstName}
-//             onChange={(val) => updateField("firstName", val)}
-//             validationType="noNumbers"
-//           />
-//           <FirstStep
-//             text={"Lastname"}
-//             placeholder={"Enter Lastname"}
-//             value={formData.lastName}
-//             onChange={(val) => updateField("lastName", val)}
-//             validationType="noNumbers"
-//           />
-//           <FirstStep
-//             text={"Username"}
-//             placeholder={"Enter Username"}
-//             value={formData.userName}
-//             onChange={(val) => updateField("userName", val)}
-//             validationType="noNumbers"
-//           />
-//         </>
-//       )}
-
-//       {/* PAGE 2: CONTACT & PASSWORD */}
-//       {step === 2 && (
-//         <>
-//           <FirstStep
-//             text={"Email"}
-//             placeholder={"example@gmail.com"}
-//             value={formData.email}
-//             onChange={(val) => updateField("email", val)}
-//             validationType="gmail"
-//           />
-//           <FirstStep
-//             text={"Phone Number"}
-//             placeholder={"Enter Phone"}
-//             value={formData.tel}
-//             onChange={(val) => updateField("tel", val)}
-//           />
-//           <FirstStep
-//             text={"Password"}
-//             placeholder={"Enter Password"}
-//             value={formData.password}
-//             onChange={(val) => updateField("password", val)}
-//           />
-//           <FirstStep
-//             text={"Confirm Password"}
-//             placeholder={"Confirm Password"}
-//             value={formData.confirmPassword}
-//             onChange={(val) => updateField("confirmPassword", val)}
-//           />
-//         </>
-//       )}
-
-//       {/* PAGE 3: DATE & PHOTO */}
-//       {step === 3 && (
-//         <>
-//           <FirstStep
-//             text={"Date of Birth"}
-//             placeholder={"yyyy-mm-dd"}
-//             value={formData.date}
-//             onChange={(val) => updateField("date", val)}
-//           />
-//           <div className="flex flex-col gap-2">
-//             <p>
-//               Profile Photo <span className="text-red-500">*</span>
-//             </p>
-//             <input
-//               type="file"
-//               className="border w-full rounded-lg p-2"
-//               onChange={(e) => updateField("img", e.target.files[0])}
-//             />
-//           </div>
-//         </>
-//       )}
-//     </div>
-//   );
-// };
 "use client";
 import { FirstStep } from "./Firststep";
+import { FourthStep } from "./fourthstep";
+import { Navigation } from "./navigation";
 import { SecondStep } from "./secondstep";
 import { Thirdstep } from "./thirdstep";
 
@@ -147,128 +12,91 @@ export const Body = ({
   updateField,
   hadledNextStep,
   error,
-  handleChangerOfPhoneNumber,
+  handledPrevStep,
+  setFormData,
+  date,
+  img,
 }) => {
   return (
-    <div className="mt-7 flex flex-col gap-3">
-      {/* PAGE 1: NAMES */}
-      {step === 1 && (
-        <>
-          <FirstStep
-            text={"Firstname"}
-            placeholder={"Enter Firstname"}
-            value={formData.firstName}
-            onChange={(val) => updateField("firstName", val)}
-            validationType="noNumbers"
-            step={step}
-            hadledNextStep={hadledNextStep}
-            error={error}
-          />
-          <FirstStep
-            text={"Lastname"}
-            placeholder={"Enter Lastname"}
-            value={formData.lastName}
-            onChange={(val) => updateField("lastName", val)}
-            validationType="noNumbers"
-            step={step}
-            hadledNextStep={hadledNextStep}
-            error={error}
-          />
-          <FirstStep
-            text={"Username"}
-            placeholder={"Enter Username"}
-            value={formData.userName}
-            onChange={(val) => updateField("userName", val)}
-            step={step}
-            hadledNextStep={hadledNextStep}
-            error={error}
-          />
-        </>
+    <div>
+      {" "}
+      {step < 4 && (
+        <div className="mt-7 flex flex-col gap-3 bg-white w-120 rounded-lg p-8 h-174 relative shadow-lg">
+          {/* PAGE 1: NAMES */}
+          {step < 4 && <Navigation currentStep={step} />}
+          {step === 1 && (
+            <div className="">
+              <FirstStep
+                text={"Firstname"}
+                placeholder={"Enter Firstname"}
+                value={formData.firstName}
+                onChange={(val) => updateField("firstName", val)}
+                validationType="noNumbers"
+                step={step}
+                hadledNextStep={hadledNextStep}
+                error={error}
+              />
+              <FirstStep
+                text={"Lastname"}
+                placeholder={"Enter Lastname"}
+                value={formData.lastName}
+                onChange={(val) => updateField("lastName", val)}
+                validationType="noNumbers"
+                step={step}
+                hadledNextStep={hadledNextStep}
+                error={error}
+              />
+              <FirstStep
+                text={"Username"}
+                placeholder={"Enter Username"}
+                value={formData.userName}
+                onChange={(val) => updateField("userName", val)}
+                step={step}
+                hadledNextStep={hadledNextStep}
+                error={error}
+              />
+            </div>
+          )}
+
+          {/* PAGE 2: CONTACT & PASSWORD */}
+          {step === 2 && (
+            <>
+              <SecondStep
+                text={"Email"}
+                placeholder={"Enter Email"}
+                value={formData.email}
+                onChange={(val) => updateField("email", val)}
+                validationType="noNumbers"
+                step={step}
+                handleNextStep={hadledNextStep}
+                handledPrevStep={handledPrevStep}
+                setStep={setStep}
+                formData={formData}
+                setFormData={setFormData}
+                updateField={updateField}
+              />
+            </>
+          )}
+
+          {/* PAGE 3: DATE & PHOTO */}
+          {step === 3 && (
+            <>
+              <Thirdstep
+                text={"Date of Birth"}
+                placeholder={"mm-dd-yyyy"}
+                value={formData.date}
+                onChange={(val) => updateField("date", val)}
+                setStep={setStep}
+                formData={formData}
+                updateField={updateField}
+              />
+            </>
+          )}
+        </div>
       )}
-
-      {/* PAGE 2: CONTACT & PASSWORD */}
-      {step === 2 && (
+      {step === 4 && (
         <>
-          <SecondStep
-            text={"Email"}
-            placeholder={"Enter Email"}
-            value={formData.email}
-            onChange={(val) => updateField("email", val)}
-            validationType="noNumbers"
-            step={step}
-            handleNextStep={hadledNextStep}
-            setStep={setStep}
-            handleChangerOfPhoneNumber={handleChangerOfPhoneNumber}
-          />
-          <SecondStep
-            text={"Phone Number"}
-            placeholder={"Enter Phone Number"}
-            value={formData.phoneNumber}
-            onChange={(val) => updateField("phoneNumber", val)}
-            validationType="noNumbers"
-            step={step}
-            handleNextStep={hadledNextStep}
-            setStep={setStep}
-            handleChangerOfPhoneNumber={handleChangerOfPhoneNumber}
-          />
-          <SecondStep
-            text={"Password"}
-            placeholder={"Enter Password"}
-            value={formData.password}
-            onChange={(val) => updateField("password", val)}
-            validationType="noNumbers"
-            step={step}
-            handleNextStep={hadledNextStep}
-            setStep={setStep}
-            handleChangerOfPhoneNumber={handleChangerOfPhoneNumber}
-          />
-          <SecondStep
-            text={"Confirm Password"}
-            placeholder={"Confirm Password"}
-            handleChangerOfPhoneNumber={handleChangerOfPhoneNumber}
-            value={formData.confirmPassword}
-            onChange={(val) => updateField("confirmPassword", val)}
-            validationType="noNumbers"
-            step={step}
-            handleNextStep={hadledNextStep}
-            setStep={setStep}
-          />
-        </>
-      )}
-
-      {/* PAGE 3: DATE & PHOTO */}
-      {step === 3 && (
-        <>
-          <Thirdstep
-            text={"Date of Birth"}
-            placeholder={"mm-dd-yyyy"}
-            value={formData.date}
-            onChange={(val) => updateField("date", val)}
-          />
-          <div className="flex flex-col gap-2">
-            <p className="text-sm font-semibold text-gray-700">
-              Profile Photo <span className="text-red-500">*</span>
-            </p>
-
-            {/* 1. We hide the actual input using 'hidden' */}
-            <input
-              type="file"
-              id="file-upload"
-              className="hidden"
-              onChange={(e) => updateField("img", e.target.files[0])}
-            />
-
-            {/* 2. We use a Label to act as the new button */}
-            <label
-              htmlFor="file-upload"
-              className="border-2 border-dashed border-[#0ca5e9] w-104 h-45 bg-[#f0f9ff] rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-[#e0f2fe] transition-colors"
-            >
-              <img src="/profile.svg" alt="" />
-              <span className="text-xs text-gray-500">
-                {formData.img ? formData.img.name : "Add Image"}
-              </span>
-            </label>
-          </div>
+          <FourthStep />
         </>
       )}
     </div>
