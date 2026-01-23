@@ -210,6 +210,7 @@
 import { useState } from "react";
 import { Input } from "./input";
 import { Navigation } from "./navigation";
+import { motion } from "framer-motion";
 
 export const SecondStep = ({
   step,
@@ -223,27 +224,22 @@ export const SecondStep = ({
   const validate = () => {
     let newErrors = {};
 
-    // Email Validation
     if (!formData.email?.toLowerCase().endsWith("@gmail.com")) {
       newErrors.email = "Email must end with @gmail.com";
     }
 
-    // Phone Validation
     if (!/^\d+$/.test(formData.phoneNumber)) {
       newErrors.phoneNumber = "Only numbers approved";
     }
 
-    // Password Validation
     if ((formData.password?.length || 0) < 8) {
       newErrors.password = "Password must be at least 8 characters";
     }
 
-    // Confirm Password Validation
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
     }
 
-    // Check if any fields are empty
     ["email", "phoneNumber", "password", "confirmPassword"].forEach((field) => {
       if (!formData[field]) newErrors[field] = "Required";
     });
@@ -259,9 +255,8 @@ export const SecondStep = ({
   };
 
   return (
-    <div className="">
+    <div className=" relative h-120">
       <div className="flex flex-col gap-4">
-        {/* Email Field */}
         <div className="flex flex-col gap-1">
           <p className="text-sm font-semibold">
             Email <span className="text-red-500">*</span>
@@ -277,7 +272,6 @@ export const SecondStep = ({
           )}
         </div>
 
-        {/* Phone Field */}
         <div className="flex flex-col gap-1">
           <p className="text-sm font-semibold">
             Phone Number <span className="text-red-500">*</span>
@@ -295,7 +289,6 @@ export const SecondStep = ({
           )}
         </div>
 
-        {/* Password Field */}
         <div className="flex flex-col gap-1">
           <p className="text-sm font-semibold">
             Password <span className="text-red-500">*</span>
@@ -312,40 +305,36 @@ export const SecondStep = ({
           )}
         </div>
 
-        {/* Confirm Password Field */}
-        <div className="flex flex-col gap-1">
-          <p className="text-sm font-semibold">
-            Confirm Password <span className="text-red-500">*</span>
-          </p>
-          <Input
-            type="password"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={(e) => updateField("confirmPassword", e.target.value)}
-            error={!!errors.confirmPassword}
-          />
-          {errors.confirmPassword && (
-            <span className="text-red-500 text-[10px]">
-              {errors.confirmPassword}
-            </span>
-          )}
-        </div>
+        <p className="text-sm font-semibold">
+          Confirm Password <span className="text-red-500">*</span>
+        </p>
+        <Input
+          type="password"
+          placeholder="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={(e) => updateField("confirmPassword", e.target.value)}
+          error={!!errors.confirmPassword}
+        />
+        {errors.confirmPassword && (
+          <span className="text-red-500 text-[10px]">
+            {errors.confirmPassword}
+          </span>
+        )}
+      </div>
 
-        {/* Navigation Buttons */}
-        <div className="flex gap-2 mt-4">
-          <button
-            onClick={handledPrevStep}
-            className="flex-1 h-11 border border-gray-300 rounded-md"
-          >
-            Back
-          </button>
-          <button
-            onClick={handleNext}
-            className="flex-1 h-11 text-white bg-[#121316] rounded-md"
-          >
-            Continue
-          </button>
-        </div>
+      <div className="flex gap-2 mt-4 absolute bottom-0 left-0 right-0 ">
+        <button
+          onClick={handledPrevStep}
+          className=" h-11 border border-gray-300 rounded-md w-32"
+        >
+          &nbsp; &lt; Back
+        </button>
+        <button
+          onClick={handleNext}
+          className=" h-11 text-white bg-[#121316] rounded-md w-70"
+        >
+          Continue {step}/3 &nbsp; &gt;
+        </button>
       </div>
     </div>
   );

@@ -44,6 +44,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Input } from "./input";
+import { motion } from "framer-motion";
 
 export const Thirdstep = ({
   formData,
@@ -54,8 +55,6 @@ export const Thirdstep = ({
   const [error, setError] = useState("");
   const [preview, setPreview] = useState(null);
 
-  // This effect ensures that if the user goes back and forth between steps,
-  // the image preview stays visible.
   useEffect(() => {
     if (formData.profileImage && formData.profileImage instanceof File) {
       const objectUrl = URL.createObjectURL(formData.profileImage);
@@ -83,7 +82,7 @@ export const Thirdstep = ({
       return;
     }
     setError("");
-    setStep(4); // Move to success step
+    setStep(4);
   };
 
   return (

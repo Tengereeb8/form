@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 export const FourthStep = () => {
   return (
     <div className="w-120 h-48.25 bg-white  rounded-lg p-8  relative shadow-lg">

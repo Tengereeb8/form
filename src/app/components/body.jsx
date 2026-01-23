@@ -4,6 +4,7 @@ import { FourthStep } from "./fourthstep";
 import { Navigation } from "./navigation";
 import { SecondStep } from "./secondstep";
 import { Thirdstep } from "./thirdstep";
+import { motion } from "framer-motion";
 
 export const Body = ({
   setStep,
@@ -22,43 +23,23 @@ export const Body = ({
       {" "}
       {step < 4 && (
         <div className="mt-7 flex flex-col gap-3 bg-white w-120 rounded-lg p-8 h-174 relative shadow-lg">
-          {/* PAGE 1: NAMES */}
           {step < 4 && <Navigation currentStep={step} />}
           {step === 1 && (
             <div className="">
               <FirstStep
                 text={"Firstname"}
                 placeholder={"Enter Firstname"}
-                value={formData.firstName}
                 onChange={(val) => updateField("firstName", val)}
                 validationType="noNumbers"
                 step={step}
                 hadledNextStep={hadledNextStep}
                 error={error}
-              />
-              <FirstStep
-                text={"Lastname"}
-                placeholder={"Enter Lastname"}
-                value={formData.lastName}
-                onChange={(val) => updateField("lastName", val)}
-                validationType="noNumbers"
-                step={step}
-                hadledNextStep={hadledNextStep}
-                error={error}
-              />
-              <FirstStep
-                text={"Username"}
-                placeholder={"Enter Username"}
-                value={formData.userName}
-                onChange={(val) => updateField("userName", val)}
-                step={step}
-                hadledNextStep={hadledNextStep}
-                error={error}
+                formData={formData}
+                updateField={updateField}
               />
             </div>
           )}
 
-          {/* PAGE 2: CONTACT & PASSWORD */}
           {step === 2 && (
             <>
               <SecondStep
@@ -78,7 +59,6 @@ export const Body = ({
             </>
           )}
 
-          {/* PAGE 3: DATE & PHOTO */}
           {step === 3 && (
             <>
               <Thirdstep

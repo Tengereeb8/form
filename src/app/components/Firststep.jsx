@@ -65,82 +65,119 @@
 // };
 "use client";
 import { useState } from "react";
-import { Navigation } from "./navigation";
+import { Input } from "./input";
 
 export const FirstStep = ({
-  text,
-  placeholder,
-  value,
-  onChange,
+  formData,
   step,
   hadledNextStep,
+  updateField,
+  handleBackStep, // Assuming you pass a back function
 }) => {
-  const [error, setError] = useState({
-    isValid: false,
-    message: "",
+  // Local state for validation errors
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
   });
 
-  const handleChange = (e) => {
-    const inputValue = e.target.value;
+  const validate = (name, value) => {
+    let errorMessage = "";
 
-    const isFirstName = text.toLowerCase().includes("firstname");
-    const isLastName = text.toLowerCase().includes("lastname");
-    if (isFirstName && /\d/.test(inputValue)) {
-      setError({
-        isValid: false,
-        message: "Numbers are not allowed",
-      });
-    } else if (isLastName && /\d/.test(inputValue)) {
-      setError({
-        isValid: false,
-        message: "Numbers are not allowed",
-      });
-    } else {
-      setError({
-        isValid: true,
-        message: "",
-      });
+    // Check for numbers in Name fields
+    if ((name === "firstName" || name === "lastName") && /\d/.test(value)) {
+      errorMessage = "Numbers are not allowed";
     }
 
-    onChange(inputValue);
+    // Check for empty strings (Required validation)
+    if (value.trim() === "") {
+      errorMessage = "This field is required";
+    }
+
+    setErrors((prev) => ({ ...prev, [name]: errorMessage }));
   };
-  console.log(hadledNextStep);
+
+  const handleInputChange = (field, value) => {
+    // 1. Update the parent state
+    updateField(field, value);
+    // 2. Run validation logic
+    validate(field, value);
+  };
+
+  // Determine if the "Continue" button should be disabled
+  // Logic: Disable if any field is empty OR if there are error messages
+  const isInvalid =
+    !formData.firstName ||
+    !formData.lastName ||
+    !formData.userName ||
+    Object.values(errors).some((msg) => msg !== "");
 
   return (
-    <div>
+    <div className="h-120 relative flex flex-col gap-4">
+      {/* First Name */}
       <div className="flex flex-col gap-1">
         <p className="text-sm font-semibold">
-          {text} <span className="text-red-500">*</span>
+          First Name <span className="text-red-500">*</span>
         </p>
-        <input
-          type="text"
-          placeholder={placeholder}
-          value={value}
-          onChange={handleChange}
-          className={`border w-full h-11 rounded-lg py-3 px-3.25 outline-none transition-colors ${
-            !error.isValid ? "border-red-500" : "border-[#0ca5e9]"
-          }`}
+        <Input
+          placeholder="Enter Firstname"
+          value={formData.firstName}
+          onChange={(e) => handleInputChange("firstName", e.target.value)}
         />
-        {!error.isValid && (
-          <span className="text-red-500 text-[10px]">{error.message}</span>
+        {errors.firstName && (
+          <span className="text-red-500 text-[10px]">{errors.firstName}</span>
         )}
       </div>
 
-      <div className="absolute bottom-0 mb-8 left-8 right-8 flex gap-2">
+      {/* Last Name */}
+      <div className="flex flex-col gap-1">
+        <p className="text-sm font-semibold">
+          Last Name <span className="text-red-500">*</span>
+        </p>
+        <Input
+          placeholder="Enter Lastname"
+          value={formData.lastName} // Fixed: was firstName
+          onChange={(e) => handleInputChange("lastName", e.target.value)} // Fixed: was firstName
+        />
+        {errors.lastName && (
+          <span className="text-red-500 text-[10px]">{errors.lastName}</span>
+        )}
+      </div>
+
+      {/* User Name */}
+      <div className="flex flex-col gap-1">
+        <p className="text-sm font-semibold">
+          Username <span className="text-red-500">*</span>
+        </p>
+        <Input
+          placeholder="Enter Username"
+          value={formData.userName} // Fixed: was firstName
+          onChange={(e) => handleInputChange("userName", e.target.value)} // Fixed: was firstName
+        />
+        {errors.userName && (
+          <span className="text-red-500 text-[10px]">{errors.userName}</span>
+        )}
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="absolute bottom-0 mb-8 left-0 right-0 flex gap-2">
         {step > 1 && (
           <button
             type="button"
+            onClick={handleBackStep}
             className="flex-1 h-11 border border-gray-300 rounded-md hover:bg-gray-50"
           >
-            Back
+            &lt; Back
           </button>
         )}
         <button
           onClick={hadledNextStep}
-          disabled={!error.isValid}
-          className="w-full h-11 flex justify-center items-center text-white bg-[#121316] rounded-md "
+          disabled={isInvalid}
+          className={`h-11 flex justify-center items-center text-white rounded-md transition-all ${
+            isInvalid ? "bg-gray-400 cursor-not-allowed" : "bg-[#121316] w-full"
+          } ${step > 1 ? "flex-1" : "w-full"}`}
         >
-          Continue
+          Continue &gt;
         </button>
       </div>
     </div>
