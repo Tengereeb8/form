@@ -86,28 +86,21 @@ export const Valid = () => {
   };
 
   return (
-    <motion.div
-      className="w-w-default h-h-default bg-[#f5f5f5] rounded-lg flex flex-col justify-between items-center p-[32px]"
-      initial={{ x: 50, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
-      <div className="bg-[#f5f5f5] h-screen text-black flex justify-center items-center ">
-        <div className="">
-          <main>
-            <Body
-              step={step}
-              formData={formData}
-              updateField={updateField}
-              hadledNextStep={hadledNextStep}
-              error={error}
-              handledPrevStep={handledPrevStep}
-              setStep={setStep}
-              setFormData={setFormData}
-            />
-          </main>
-        </div>
+    <div className="bg-[#f5f5f5] h-screen text-black flex justify-center items-center ">
+      <div className="">
+        <main>
+          <Body
+            step={step}
+            formData={formData}
+            updateField={updateField}
+            hadledNextStep={hadledNextStep}
+            error={error}
+            handledPrevStep={handledPrevStep}
+            setStep={setStep}
+            setFormData={setFormData}
+          />
+        </main>
       </div>
-    </motion.div>
+    </div>
   );
 };
