@@ -16,11 +16,11 @@ export const SecondStep = ({
   const validate = () => {
     let newErrors = {};
 
-    if (!formData.email?.toLowerCase().endsWith("@gmail.com")) {
-      newErrors.email = "Email must end with @gmail.com";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please Enter valid Email";
     }
 
-    if (!/^\d+$/.test(formData.phoneNumber)) {
+    if (!/^\+?\d{8}$/.test(formData.phoneNumber)) {
       newErrors.phoneNumber = "Only numbers approved";
     }
 
