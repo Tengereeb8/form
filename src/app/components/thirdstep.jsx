@@ -218,11 +218,11 @@ export const Thirdstep = ({
 
   const handleNext = () => {
     if (!formData.dateOfBirth) {
-      setError("Please select your date of birth.");
+      setError("Required");
       return;
     }
     if (!formData.profileImage) {
-      setError("Please upload a profile photo.");
+      setError("Required");
       return;
     }
     setError("");

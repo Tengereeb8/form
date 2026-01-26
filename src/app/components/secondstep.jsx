@@ -15,13 +15,16 @@ export const SecondStep = ({
 
   const validate = () => {
     let newErrors = {};
+    const phone = formData.phoneNumber?.trim || "";
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please Enter valid Email";
     }
 
-    if (!/^\+?\d{8}$/.test(formData.phoneNumber)) {
+    if (!/^\d{8}$/.test(phone)) {
       newErrors.phoneNumber = "Only numbers approved";
+    } else if (phone.length !== 8) {
+      newErrors.phoneNumber = "Number must be exactly 8 digits";
     }
 
     if ((formData.password?.length || 0) < 8) {
