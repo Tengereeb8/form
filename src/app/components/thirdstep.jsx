@@ -195,7 +195,10 @@ export const Thirdstep = ({
   setStep,
   step,
 }) => {
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({
+    dateOfBirth: "",
+    profileImage: "",
+  });
   const [preview, setPreview] = useState(null);
 
   useEffect(() => {
@@ -211,22 +214,28 @@ export const Thirdstep = ({
     if (file) {
       updateField("profileImage", file);
       setPreview(URL.createObjectURL(file));
-      setError("");
+      setErrors((prev) => ({ ...prev, profileImage: "" }));
     }
   };
-  console.log(handledPrevStep);
 
   const handleNext = () => {
+    let newErrors = {
+      dateOfBirth: "",
+      profileImage: "",
+    };
+
     if (!formData.dateOfBirth) {
-      setError("Required");
-      return;
+      newErrors.dateOfBirth = "Please select your date of birth.";
     }
     if (!formData.profileImage) {
-      setError("Required");
-      return;
+      newErrors.profileImage = "Please upload a profile photo.";
     }
-    setError("");
-    setStep(4);
+
+    setErrors(newErrors);
+
+    if (!newErrors.dateOfBirth && !newErrors.profileImage) {
+      setStep(4);
+    }
   };
 
   return (
@@ -236,7 +245,7 @@ export const Thirdstep = ({
       transition={{ duration: 1 }}
       className="relative h-full"
     >
-      <div className="mt-7 flex flex-col gap-3 bg-white w-120 rounded-lg p-8 h-174 relative shadow-lg">
+      <div className="  mt-7 flex flex-col gap-3 bg-white w-120 rounded-lg p-8 h-174 relative shadow-lg">
         <div className="flex flex-col gap-4 flex-1">
           <Navigation />
 
@@ -249,8 +258,13 @@ export const Thirdstep = ({
               type="date"
               value={formData.dateOfBirth || ""}
               onChange={(e) => updateField("dateOfBirth", e.target.value)}
-              error={error.includes("date")}
+              error={!!errors.dateOfBirth}
             />
+            {errors.dateOfBirth && (
+              <span className="text-red-500 text-[10px]">
+                {errors.dateOfBirth}
+              </span>
+            )}
           </div>
 
           {/* --- PROFILE PHOTO SECTION --- */}
@@ -270,7 +284,7 @@ export const Thirdstep = ({
             <label
               htmlFor="file-upload"
               className={`border-2 border-dashed w-full h-48 rounded-lg flex flex-col items-center justify-center cursor-pointer overflow-hidden transition-all ${
-                error.includes("photo")
+                errors.profileImage
                   ? "border-red-500 bg-red-50"
                   : "border-[#0ca5e9] bg-[#f0f9ff]"
               } hover:bg-[#e0f2fe]`}
@@ -301,12 +315,16 @@ export const Thirdstep = ({
             </label>
 
             {/* ERROR MESSAGE */}
-            {error && <span className="text-red-500 text-[10px]">{error}</span>}
+            {errors.profileImage && (
+              <span className="text-red-500 text-[10px]">
+                {errors.profileImage}
+              </span>
+            )}
           </div>
         </div>
 
         {/* NAVIGATION BUTTONS */}
-        <div className="flex gap-2 mb-8 mt-33.5">
+        <div className="flex gap-2 mb-8">
           <button
             onClick={handledPrevStep}
             className="h-11 border border-gray-300 rounded-md w-32"

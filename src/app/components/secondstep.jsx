@@ -12,6 +12,7 @@ export const SecondStep = ({
   updateField,
 }) => {
   const [errors, setErrors] = useState({});
+  console.log(errors);
 
   const validate = () => {
     let newErrors = {};
@@ -21,10 +22,8 @@ export const SecondStep = ({
       newErrors.email = "Please Enter valid Email";
     }
 
-    if (!/^\d{8}$/.test(phone)) {
+    if (/^\d{8}$/.test(phone)) {
       newErrors.phoneNumber = "Only numbers approved";
-    } else if (phone.length !== 8) {
-      newErrors.phoneNumber = "Number must be exactly 8 digits";
     }
 
     if ((formData.password?.length || 0) < 8) {
