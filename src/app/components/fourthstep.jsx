@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 export const FourthStep = () => {
   return (
     <motion.div
-      className="w-w-default h-h-default bg-[#f5f5f5] rounded-lg flex flex-col justify-between items-center p-[32px]"
+      className="w-w-default h-h-default bg-[#f5f5f5] rounded-lg flex flex-col justify-between items-center p-8"
       initial={{ x: 50, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 1 }}

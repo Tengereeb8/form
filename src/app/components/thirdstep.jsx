@@ -249,7 +249,6 @@ export const Thirdstep = ({
         <div className="flex flex-col gap-4 flex-1">
           <Navigation />
 
-          {/* --- DATE OF BIRTH SECTION --- */}
           <div className="flex flex-col gap-1">
             <p className="text-sm font-semibold">
               Date of Birth <span className="text-red-500">*</span>
@@ -267,7 +266,6 @@ export const Thirdstep = ({
             )}
           </div>
 
-          {/* --- PROFILE PHOTO SECTION --- */}
           <div className="flex flex-col gap-1">
             <p className="text-sm font-semibold">
               Profile Photo <span className="text-red-500">*</span>
@@ -314,7 +312,6 @@ export const Thirdstep = ({
               )}
             </label>
 
-            {/* ERROR MESSAGE */}
             {errors.profileImage && (
               <span className="text-red-500 text-[10px]">
                 {errors.profileImage}
@@ -323,7 +320,6 @@ export const Thirdstep = ({
           </div>
         </div>
 
-        {/* NAVIGATION BUTTONS */}
         <div className="flex gap-2 mb-8">
           <button
             onClick={handledPrevStep}
